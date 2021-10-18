@@ -1,31 +1,58 @@
-group 'org.example'
+// apply plugin: 'java'
+// apply plugin: 'application'
+// apply plugin: 'org.springframework.boot'
+plugins {
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group 'ChatBot'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.2.RELEASE")
-    }
-}
+// buildscript {
+//     repositories {
+//         mavenCentral()
+//     }
+//     dependencies {
+//         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.2.RELEASE")
+//     }
+// }
+
+
 repositories {
     mavenCentral()
 }
 
 
+allprojects {
+    sourceCompatibility = 1.8
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+}
+
 sourceSets {
     main {
-        java {
-            srcDir 'src/ChatBot'
-//            srcDir 'build/swagger-code-dummy/src/main/java'
+        resources {
+            // srcDir 'src/ChatBot'
+           srcDir 'src/res'
         }
     }
 }
+
+// war {
+//    with copySpec {
+//       from zipTree('src/res/*') {
+//          exclude 'WEB-INF/web.xml' 
+//       }
+//    }
+// } 
 
 
 dependencies {
@@ -55,6 +82,33 @@ artifacts {
         into 'build/libs'
     }
 }
+
+springBoot {
+    mainClassName = "ChatBot.Communication"
+}
+
+bootWar {
+    archiveFileName = 'app.war'
+}
+
+// defaultTasks 'jar'
+
+// jar {
+//  from {
+//         (configurations.runtime).collect {
+//             it.isDirectory() ? it : zipTree(it)
+//         }
+//     }    
+//     manifest {
+//         attributes 'Main-Class': 'ChatBot.Communication'
+//     }
+// }
+
+
+// if (!hasProperty('mainClass')) {
+//     ext.mainClass = 'ChatBot.Communication'
+// }
+
 
 //jar {
 //    manifest {

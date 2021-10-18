@@ -29,7 +29,7 @@ public class Comm {
 
     static {
         try {
-            db = dbFactory.newEmbeddedDatabase(new File(Comm.class.getResource("../graph.db").toURI()));
+            db = dbFactory.newEmbeddedDatabase(new File(Comm.class.getResource("../graph.db").toExternalForm()));
         } catch (Exception e) {
 //            e.printStackTrace();
             db = dbFactory.newEmbeddedDatabase(new File("src/res/graph.db"));
