@@ -65,7 +65,7 @@ dependencies {
 
     compile "cn.hutool:hutool-all:4.1.8"
     // compile "edu.stanford.nlp:stanford-parser:3.9.2"
-    compile fileTree(dir: '/home/zixiang/NLP/jar_de', include: ['*.jar'])
+    compile fileTree(dir: './jar_de', include: ['*.jar'])
 
     // compile('org.springframework.boot:spring-boot-starter-aop:1.4.2.RELEASE')
     compile("org.springframework.boot:spring-boot-starter-web:2.2.2.RELEASE")
