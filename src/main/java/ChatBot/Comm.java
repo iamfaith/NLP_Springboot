@@ -29,9 +29,35 @@ public class Comm {
 
     static {
         try {
-            db = dbFactory.newEmbeddedDatabase(new File(Comm.class.getResource("../graph.db").toExternalForm()));
+            // File file = new File(Comm.class.getResource("../graph.db").toExternalForm()); 
+
+            Stirng path = System.getenv("graphdbPath")
+
+            File file = new File("graph.db"); 
+            if (file.exists()) { 
+                System.out.println("file exists");
+            } else {
+                System.out.println("file not exists");
+            }
+            db = dbFactory.newEmbeddedDatabase(file);
+            String entity = "data mining";
+            String relation = "example";
+            StringBuilder sb = new StringBuilder();
+            // select * from 
+            sb.append("MATCH (n1) ");
+            sb.append("RETURN n1.definition");
+            Result definition = db.execute(sb.toString());
+            System.out.println(definition.hasNext());
+
+            StringBuilder sb_complex = new StringBuilder();
+            sb_complex.append("MATCH (n1) WHERE n1.name=~" + "\"" + "(?i)" + entity + "\"");
+            sb_complex.append("MATCH p=(n1)-[r]->(n2) WHERE type(r)=" + "\"" + relation + "\"");
+            sb_complex.append("RETURN n1.definition");
+            Result complex_definition = db.execute(sb_complex.toString());
+            System.out.println(complex_definition.hasNext());
+
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             db = dbFactory.newEmbeddedDatabase(new File("src/res/graph.db"));
         }
     }
